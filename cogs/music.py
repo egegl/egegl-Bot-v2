@@ -47,7 +47,6 @@ class MusicCog(commands.Cog):
                 audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
                 if len(queue_list) == 1:
                     vc.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
-                    await ctx.send("**Çalınan Parça: **" + queue_list[0])
 
         @bot.command()
         async def dc(ctx):
@@ -79,7 +78,6 @@ class MusicCog(commands.Cog):
                         pass
                 vc.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
                 await ctx.send(embed=skip_embed)
-                await ctx.send("**Çalınan Parça: **https://www.youtube.com/watch?v=" + queue_list[0])
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=skip_embed)
