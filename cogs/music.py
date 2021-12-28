@@ -10,13 +10,13 @@ from __main__ import env
 class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
+        
+        queue_list = []
         sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
 
         @bot.command()
         async def p(ctx, *args):
             global queue_list, vc, video_ids, FFMPEG_OPTIONS, YDL_OPTIONS
-            queue_list = []
             search_term = ('{}'.format("+".join(args)))
             request = Request("https://www.youtube.com/results?search_query=" + search_term)
             request.add_header(env["BOT_TOKEN"], "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ("
