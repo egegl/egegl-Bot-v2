@@ -5,11 +5,11 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix="!", help_command=None)
 
 env = {
-    "BOT_TOKEN": os.environ['BOT TOKEN'],
-    "YOUTUBE_KEY": os.environ['YOUTUBE KEY'],
-    "REDDIT_ID": os.environ['REDDIT ID'],
-    "REDDIT_SECRET_KEY": os.environ['REDDIT SECRET KEY'],
-    "REDDIT_PW": os.environ['REDDIT PW']
+    "BOT_TOKEN": os.environ['BOT_TOKEN'],
+    "YOUTUBE_KEY": os.environ['YOUTUBE_KEY'],
+    "REDDIT_ID": os.environ['REDDIT_ID'],
+    "REDDIT_SECRET_KEY": os.environ['REDDIT_SECRET_KEY'],
+    "REDDIT_PW": os.environ['REDDIT_PW']
 }
 
 cogs = ["cogs.music",
