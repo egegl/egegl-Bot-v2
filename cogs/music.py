@@ -11,6 +11,8 @@ class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
+
         @bot.command()
         async def p(ctx, *args):
             global queue_list, vc, video_ids, FFMPEG_OPTIONS, YDL_OPTIONS
@@ -45,7 +47,7 @@ class MusicCog(commands.Cog):
                 url_2 = info["formats"][0]["url"]
                 audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
                 if len(queue_list) == 1:
-                    ctx.voice_client.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
+                    vc.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
                     await ctx.send("**Çalınan Parça: **" + " " + queue_list[0])
 
         @bot.command()
@@ -62,7 +64,7 @@ class MusicCog(commands.Cog):
             try:
                 del queue_list[0]
             except:
-                pass
+                return
             if len(queue_list) >= 1:
                 vc.stop()
                 connected = False
@@ -79,16 +81,16 @@ class MusicCog(commands.Cog):
                 vc.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
                 await ctx.send(embed=skip_embed)
                 await ctx.send("**Çalınan Parça: **https://www.youtube.com/watch?v=" + video_ids[0])
-            else:
+            elif len(queue_list) == 0:
+                vc.stop()
                 await ctx.send(embed=skip_embed)
-                await asyncio.sleep(5)
-                await ctx.voice_client.disconnect()
+                await ctx.send(embed=sıra_boş_embed)
+                await asyncio.sleep(30)
+                await vc.disconnect()
                 return
 
         @bot.command()
         async def queue(ctx):
-            global sıra_boş_embed
-            sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
             try:
                 if len(queue_list) > 0:
                     sıra_embed = discord.Embed(title="**Şarkı Sırası:**", color=discord.Color.red())
