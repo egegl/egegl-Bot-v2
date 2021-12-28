@@ -1,7 +1,7 @@
 import re
 import discord
 import youtube_dl
-from asyncio import sleep, run
+import asyncio
 from discord.ext import commands
 from urllib.request import Request, urlopen
 from __main__ import env
@@ -45,7 +45,7 @@ class MusicCog(commands.Cog):
                 url_2 = info["formats"][0]["url"]
                 audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
                 if len(queue_list) == 1:
-                    ctx.voice_client.play(source=audio_source, after=lambda e: run(skip(ctx)))
+                    ctx.voice_client.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
                     await ctx.send("**Çalınan Parça: **" + " " + queue_list[0])
 
         @bot.command()
@@ -73,15 +73,15 @@ class MusicCog(commands.Cog):
                             url_2 = info["formats"][0]["url"]
                             audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
                             connected = True
-                            await sleep(1)
+                            await asyncio.sleep(1)
                     except:
                         pass
-                vc.play(source=audio_source, after=lambda e: run(skip(ctx)))
+                vc.play(source=audio_source, after=lambda e: asyncio.run(skip(ctx)))
                 await ctx.send(embed=skip_embed)
                 await ctx.send("**Çalınan Parça: **https://www.youtube.com/watch?v=" + video_ids[0])
             else:
                 await ctx.send(embed=skip_embed)
-                await sleep(10)
+                await asyncio.sleep(30)
                 await ctx.voice_client.disconnect()
                 return
 
