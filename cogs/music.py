@@ -84,7 +84,7 @@ class MusicCog(commands.Cog):
                 await ctx.send(embed=skip_embed)
                 await ctx.send(embed=sıra_boş_embed)
                 await sleep(30)
-                await vc.disconnect()
+                await ctx.voice_client.disconnect()
                 return
 
         @bot.command()
