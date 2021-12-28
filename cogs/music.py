@@ -80,9 +80,8 @@ class MusicCog(commands.Cog):
                 await ctx.send(embed=skip_embed)
                 await ctx.send("**Çalınan Parça: **https://www.youtube.com/watch?v=" + video_ids[0])
             elif len(queue_list) == 0:
-                vc.stop()
-                await ctx.send(embed=skip_embed)
                 await ctx.send(embed=sıra_boş_embed)
+                await ctx.send(embed=skip_embed)
                 await sleep(30)
                 await ctx.voice_client.disconnect()
                 return
