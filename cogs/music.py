@@ -62,7 +62,7 @@ class MusicCog(commands.Cog):
             try:
                 del queue_list[0]
             except:
-                return
+                pass
             if len(queue_list) >= 1:
                 vc.stop()
                 connected = False
