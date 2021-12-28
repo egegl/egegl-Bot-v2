@@ -33,5 +33,4 @@ async def on_guild_join(guild):
     await sys_channel.send(embed=welcome_embed)
 
 
-
 bot.run(env["BOT_TOKEN"])
