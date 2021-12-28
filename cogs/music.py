@@ -1,3 +1,4 @@
+import asyncio
 import re
 import discord
 import youtube_dl
@@ -81,7 +82,7 @@ class MusicCog(commands.Cog):
                 await ctx.send("**Çalınan Parça: **https://www.youtube.com/watch?v=" + video_ids[0])
             else:
                 await ctx.send(embed=skip_embed)
-                await asyncio.sleep(30)
+                await asyncio.sleep(5)
                 await ctx.voice_client.disconnect()
                 return
 
