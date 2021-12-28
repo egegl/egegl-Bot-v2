@@ -93,7 +93,7 @@ class MusicCog(commands.Cog):
             sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
             try:
                 if len(queue_list) > 0:
-                    sıra_embed = discord.Embed(title="**Şarkı Sırası:**", color=discord.Color.blue())
+                    sıra_embed = discord.Embed(title="**Şarkı Sırası:**", color=discord.Color.red())
                     await ctx.send(embed=sıra_embed)
                     for i in range(len(queue_list)):
                         await ctx.send("**" + str(i+1) + ")** " + queue_list[i])
