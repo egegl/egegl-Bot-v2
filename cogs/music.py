@@ -6,13 +6,12 @@ from discord.ext import commands
 from urllib.request import Request, urlopen
 from __main__ import env
 
+queue_list = []
+sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
 
 class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
-        queue_list = []
-        sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**", color=discord.Color.red())
 
         @bot.command()
         async def p(ctx, *args):
