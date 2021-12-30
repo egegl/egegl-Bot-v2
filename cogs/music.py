@@ -49,15 +49,17 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def self_check(ctx):
-            while vc.is_playing():
-                await asyncio.sleep(6)
-                pass
-            else:
+            if not vc.is_playing():
+                print(len(queue_list))
                 if len(queue_list) != 0:
-                    await ctx.invoke(bot.get_command("skip"))
-                else:
-                    await asyncio.sleep(20)
-                    await ctx.invoke(bot.get_command("dc"))
+                    asyncio.sleep(3)
+                    if not vc.is_playing():
+                        await ctx.invoke(bot.get_command("skip"))
+                elif len(queue_list) == 0:
+                    asyncio.sleep(3)
+                    if not vc.is_playing():
+                        await asyncio.sleep(20)
+                        await ctx.invoke(bot.get_command("dc"))
 
         @bot.command()
         async def p(ctx, *args):
