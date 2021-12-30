@@ -86,16 +86,10 @@ class MusicCog(commands.Cog):
                 return
             if len(queue_list) >= 1:
                 vc.stop()
-                connected = False
-                while not connected:
-                    with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-                        info = ydl.extract_info(url=queue_list[0], download=False)
-                        url_2 = info["formats"][0]["url"]
-                        audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
-                        connected = True
+                await play()
                 vc.play(source=audio_source)
                 await ctx.send(embed=skip_embed)
-                await ctx.send("**Çalınan Parça:** " + str(queue_list[0]))
+                await ctx.send("**Çalınan Parça:** " + currentvidlink)
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=skip_embed)
