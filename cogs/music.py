@@ -26,8 +26,6 @@ class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        a_int = 0
-
         async def yt_search():
             global currentvidlink
             request = Request("https://www.youtube.com/results?search_query=" + search_term)
@@ -50,27 +48,6 @@ class MusicCog(commands.Cog):
                     queue_list.append(audio_source)
 
         @bot.command()
-        async def self_check(ctx):
-            global a_int
-            while vc.is_playing():
-                a_int = 1
-                await ctx.send("playing")
-                await asyncio.sleep(3)
-            while not vc.is_playing():
-                a_int = 1
-                print(len(queue_list))
-                if len(queue_list) > 0:
-                    await asyncio.sleep(3)
-                    if not vc.is_playing():
-                        await ctx.invoke(bot.get_command("skip"))
-                elif len(queue_list) == 0:
-                    await asyncio.sleep(3)
-                    if not vc.is_playing():
-                        await asyncio.sleep(20)
-                        if not vc.is_playing():
-                            await ctx.invoke(bot.get_command("dc"))
-
-        @bot.command()
         async def p(ctx, *args):
             global queue_list, vc, search_term
             search_term = ('{}'.format("+".join(args)))
@@ -90,8 +67,6 @@ class MusicCog(commands.Cog):
                     description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
                     color=discord.Color.red())
                 await ctx.send(embed=queue_embed)
-            if a_int == 0:
-                await ctx.invoke(bot.get_command("self_check"))
 
         @bot.command()
         async def dc(ctx):
@@ -120,24 +95,11 @@ class MusicCog(commands.Cog):
                         connected = True
                 vc.play(source=audio_source)
                 await ctx.send(embed=skip_embed)
-                await ctx.send("**Çalınan Parça:** " + currentvidlink)
+                await ctx.send("**Çalınan Parça:** " + str(queue_list[0]))
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=skip_embed)
                 await ctx.send(embed=sıra_boş_embed)
-                return
-
-        @bot.command()
-        async def queue(ctx):
-            try:
-                if len(queue_list) > 0:
-                    sıra_embed = discord.Embed(title="**Şarkı Sırası:**", color=discord.Color.red())
-                    await ctx.send(embed=sıra_embed)
-                    for i in range(len(queue_list)):
-                        await ctx.send("**" + str(i + 1) + ")** " + queue_list[i])
-                else:
-                    await ctx.send(embed=sıra_boş_embed)
-            except:
                 return
 
 
