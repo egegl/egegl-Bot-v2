@@ -94,9 +94,6 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def skip(ctx):
-            if not ctx.author.voice.channel == ctx.guild.voice_client.channel:
-                await ctx.send(embed=samechan_embed)
-                return
             skip_embed = discord.Embed(description="**✅  Şarkı geçildi.**", color=discord.Color.red())
             try:
                 del queue_list[0]
