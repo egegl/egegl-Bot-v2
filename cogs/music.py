@@ -59,8 +59,8 @@ class MusicCog(commands.Cog):
                     await ctx.send(embed=novoice_embed)
                     return
             await yt_search()
-            await play()
             if queue_list[0] == currentvidlink:
+                await play()
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             else:
                 queue_embed = discord.Embed(
