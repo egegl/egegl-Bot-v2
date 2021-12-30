@@ -92,8 +92,8 @@ class MusicCog(commands.Cog):
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=sıra_boş_embed)
-                await asyncio.sleep(5)
-                if ctx.voice_client.is_playing():
+                await asyncio.sleep(30)
+                if not ctx.voice_client.is_playing():
                     await ctx.invoke(self.bot.get_command("dc"))
                 return
 
