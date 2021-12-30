@@ -41,12 +41,12 @@ class RedditCog(commands.Cog):
         @bot.command()
         async def initmemes(ctx):
             if str(ctx.message.channel) == "memes":
-                funny_embed = discord.Embed(description="✅ Initializing *the funny*... Expect to see memes!", color=discord.Color.from_rgb(255, 69, 0))
+                funny_embed = discord.Embed(description="✅ Kelimenin tam anlamıyla *matrak* miimler görmeye hazır ol... :)", color=discord.Color.from_rgb(255, 69, 0))
                 await ctx.send(embed=funny_embed)
                 while True:
                     await sleep(900)
                     subreddit = await reddit_asyncpraw.subreddit(random.choice(meme_subs))
-                    submission_list = [submission async for submission in subreddit.hot(limit=15) if
+                    submission_list = [submission async for submission in subreddit.rising(limit=20) if
                                        not submission.stickied and not submission.over_18 and not submission.spoiler]
                     selector = random.randint(0, len(submission_list) - 1)
                     p = submission_list[selector]
