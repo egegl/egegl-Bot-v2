@@ -62,7 +62,8 @@ class MusicCog(commands.Cog):
                     await asyncio.sleep(3)
                     if not vc.is_playing():
                         await asyncio.sleep(20)
-                        await ctx.invoke(bot.get_command("dc"))
+                        if not vc.is_playing():
+                            await ctx.invoke(bot.get_command("dc"))
 
         @bot.command()
         async def p(ctx, *args):
