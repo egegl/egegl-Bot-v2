@@ -51,6 +51,7 @@ class MusicCog(commands.Cog):
         async def self_check(ctx):
             while vc.is_playing():
                 await asyncio.sleep(6)
+                pass
             else:
                 if len(queue_list) != 0:
                     await ctx.invoke(bot.get_command("skip"))
