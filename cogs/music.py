@@ -6,7 +6,6 @@ from discord.ext import commands
 from urllib.request import Request, urlopen
 from __main__ import env
 
-a_int = 1
 FFMPEG_OPTIONS = {"before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
                   "options": "-vn"}
 YDL_OPTIONS = {"format": "bestaudio"}
@@ -27,6 +26,7 @@ class MusicCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        a_int = 0
 
         async def yt_search():
             global currentvidlink
@@ -51,6 +51,8 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def self_check(ctx):
+            global a_int
+            a_int = 1
             while vc.is_playing():
                 await ctx.send("playing")
                 await asyncio.sleep(3)
@@ -69,8 +71,7 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def p(ctx, *args):
-            global queue_list, vc, search_term, a_int
-            a_int += 1
+            global queue_list, vc, search_term
             search_term = ('{}'.format("+".join(args)))
             if not ctx.guild.voice_client:
                 try:
@@ -88,7 +89,7 @@ class MusicCog(commands.Cog):
                     description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
                     color=discord.Color.red())
                 await ctx.send(embed=queue_embed)
-            if a_int == 2:
+            if a_int == 0:
                 await ctx.invoke(bot.get_command("self_check"))
 
         @bot.command()
