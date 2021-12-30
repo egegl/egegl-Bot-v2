@@ -52,11 +52,12 @@ class MusicCog(commands.Cog):
         @bot.command()
         async def self_check(ctx):
             global a_int
-            a_int = 1
             while vc.is_playing():
+                a_int = 1
                 await ctx.send("playing")
                 await asyncio.sleep(3)
             while not vc.is_playing():
+                a_int = 1
                 print(len(queue_list))
                 if len(queue_list) > 0:
                     await asyncio.sleep(3)
@@ -83,7 +84,7 @@ class MusicCog(commands.Cog):
             await yt_search()
             await play()
             if queue_list[0] == currentvidlink:
-                await ctx.send("**Çalınan Parça:** " + str(queue_list[0]))
+                await ctx.send("**Çalınan Parça:** " + currentvidlink)
             else:
                 queue_embed = discord.Embed(
                     description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
@@ -119,7 +120,7 @@ class MusicCog(commands.Cog):
                         connected = True
                 vc.play(source=audio_source)
                 await ctx.send(embed=skip_embed)
-                await ctx.send("**Çalınan Parça:** " + str(queue_list[0]))
+                await ctx.send("**Çalınan Parça:** " + currentvidlink)
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=skip_embed)
