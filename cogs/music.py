@@ -42,10 +42,7 @@ class MusicCog(commands.Cog):
                 info = ydl.extract_info(url=queue_list[0], download=False)
                 url_2 = info["formats"][0]["url"]
                 audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
-                if len(queue_list) == 1:
-                    vc.play(source=audio_source)
-                elif len(queue_list) > 1:
-                    queue_list.append(audio_source)
+                vc.play(source=audio_source)
 
         @bot.command()
         async def p(ctx, *args):
@@ -84,15 +81,13 @@ class MusicCog(commands.Cog):
                 del queue_list[0]
             except:
                 return
+            await ctx.send(embed=skip_embed)
             if len(queue_list) >= 1:
                 vc.stop()
                 await play()
-                vc.play(source=audio_source)
-                await ctx.send(embed=skip_embed)
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             elif len(queue_list) == 0:
                 vc.stop()
-                await ctx.send(embed=skip_embed)
                 await ctx.send(embed=sıra_boş_embed)
                 return
 
