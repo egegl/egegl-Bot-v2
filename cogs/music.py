@@ -42,10 +42,11 @@ class MusicCog(commands.Cog):
                 info = ydl.extract_info(url=queue_list[0], download=False)
                 url_2 = info["formats"][0]["url"]
                 audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
-                vc.play(source=audio_source)
 
         @bot.command()
         async def p(ctx, *args):
+            global play_context
+            play_context = ctx
             global queue_list, vc, search_term
             search_term = ('{}'.format("+".join(args)))
             if not ctx.guild.voice_client:
@@ -58,6 +59,7 @@ class MusicCog(commands.Cog):
             await yt_search()
             if queue_list[0] == currentvidlink:
                 await play()
+                vc.play(source=audio_source)
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             else:
                 queue_embed = discord.Embed(
@@ -85,11 +87,23 @@ class MusicCog(commands.Cog):
             if len(queue_list) >= 1:
                 vc.stop()
                 await play()
+                vc.play(source=audio_source)
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             elif len(queue_list) == 0:
                 vc.stop()
                 await ctx.send(embed=sıra_boş_embed)
+                await asyncio.sleep(5)
+                if ctx.voice_client.is_playing():
+                    await ctx.invoke(self.bot.get_command("dc"))
                 return
+
+        @bot.command()
+        async def queue(ctx):
+            if len(queue_list) > 0:
+                for i in range(len(queue_list)):
+                    await ctx.send("**" + str(i + 1) + ")** " + queue_list[i])
+            else:
+                await ctx.send(embed=sıra_boş_embed)
 
 
 def setup(bot):
