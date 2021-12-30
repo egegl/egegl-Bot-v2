@@ -33,4 +33,9 @@ async def on_guild_join(guild):
     await sys_channel.send(embed=welcome_embed)
 
 
+@bot.command()
+async def ping(ctx):
+    ctx.send("pong")
+
+
 bot.run(env["BOT_TOKEN"])
