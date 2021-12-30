@@ -49,7 +49,10 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def self_check(ctx):
-            if not vc.is_playing():
+            while vc.is_playing():
+                ctx.send("playing")
+                asyncio.sleep(3)
+            while not vc.is_playing():
                 print(len(queue_list))
                 if len(queue_list) > 0:
                     asyncio.sleep(3)
