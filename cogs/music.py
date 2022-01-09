@@ -66,7 +66,7 @@ class MusicCog(commands.Cog):
             await yt_search()
             if queue_list[0] == currentvidlink:
                 await play()
-                vc.play(source=audio_source, after=lambda e: skip(play_context))
+                vc.play(source=audio_source, after= await ctx.invoke(self.bot.get_command("skip")))
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             else:
                 queue_embed = discord.Embed(
