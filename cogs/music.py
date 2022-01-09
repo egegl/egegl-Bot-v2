@@ -14,6 +14,9 @@ sıra_boş_embed = discord.Embed(description="**▶️  Şarkı sırası boş.**
 novoice_embed = discord.Embed(
     description="**❌  Bu komutu kullanmak için bir ses kanalına bağlanın.**",
     color=discord.Color.red())
+cantplay_embed = discord.Embed(
+    description="**❌  Bu şarkı çalınamıyor. Başka bir şarkı deneyin.**",
+    color=discord.Color.red())
 samechan_embed = discord.Embed(
     description="**❌  Bu komutu kullanmak için botun olduğu ses kanalına bağlanın.**",
     color=discord.Color.red())
@@ -39,9 +42,13 @@ class MusicCog(commands.Cog):
         async def play():
             global audio_source
             with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-                info = ydl.extract_info(url=queue_list[0], download=False)
-                url_2 = info["formats"][0]["url"]
-                audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
+                try:
+                    info = ydl.extract_info(url=queue_list[0], download=False)
+                    url_2 = info["formats"][0]["url"]
+                    audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
+                except:
+                    del queue_list[0]
+                    play_context.send(embed=cantplay_embed)
 
         @bot.command()
         async def p(ctx, *args):
