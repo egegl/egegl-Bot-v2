@@ -48,7 +48,7 @@ class MusicCog(commands.Cog):
                     audio_source = await discord.FFmpegOpusAudio.from_probe(url_2, **FFMPEG_OPTIONS)
                 except:
                     del queue_list[0]
-                    play_context.send(embed=cantplay_embed)
+                    await play_context.send(embed=cantplay_embed)
 
         @bot.command()
         async def p(ctx, *args):
