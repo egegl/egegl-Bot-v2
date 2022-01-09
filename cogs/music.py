@@ -54,6 +54,7 @@ class MusicCog(commands.Cog):
         @bot.event
         async def after(ctx):
             while True:
+                await asyncio.sleep(4)
                 if not ctx.voice_client.is_playing():
                     await ctx.invoke(self.bot.get_command("skip"))
 
