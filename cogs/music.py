@@ -74,9 +74,11 @@ class MusicCog(commands.Cog):
                     description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
                     color=discord.Color.red())
                 await ctx.send(embed=queue_embed)
-            await asyncio.sleep(3)
-            if not ctx.voice_client.is_playing():
-                await ctx.invoke(self.bot.get_command("skip"))
+
+            while ctx.voice_client.is_playing():
+                await asyncio.sleep(3)
+                if not ctx.voice_client.is_playing():
+                    await ctx.invoke(self.bot.get_command("skip"))
 
         @bot.command()
         async def dc(ctx):
