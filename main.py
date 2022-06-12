@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix="!", help_command=None)
+version = "1.0"
 
 env = {
     "BOT_TOKEN": os.environ['BOT_TOKEN'],
@@ -35,7 +36,7 @@ async def on_guild_join(guild):
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send("pong")
+    await ctx.send("pong: version" + version)
 
 
 bot.run(env["BOT_TOKEN"])
