@@ -90,21 +90,20 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def skip(ctx):
-            try:
+            if len(queue_list) > 1:
                 del queue_list[0]
-            except:
-                return
-            await ctx.send(embed=skip_embed)
-            if len(queue_list) >= 1:
+                await ctx.send(embed=skip_embed)
                 vc.stop()
                 await play()
                 vc.play(source=audio_source)
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
-            elif len(queue_list) == 0:
+            elif len(queue_list) == 1:
                 vc.stop()
                 await asyncio.sleep(30)
                 if not ctx.voice_client.is_playing():
                     await ctx.invoke(self.bot.get_command("dc"))
+                return
+            else:
                 return
 
         @bot.command()
