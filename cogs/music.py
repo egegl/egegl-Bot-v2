@@ -20,8 +20,10 @@ cantplay_embed = discord.Embed(
 samechan_embed = discord.Embed(
     description="**❌  Bu komutu kullanmak için botun olduğu ses kanalına bağlanın.**",
     color=discord.Color.red())
-
-
+skip_embed = discord.Embed(description="**✅  Şarkı geçildi.**", color=discord.Color.red())
+queue_embed = discord.Embed(
+                    description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
+                    color=discord.Color.red())
 
 class MusicCog(commands.Cog):
     def __init__(self, bot):
@@ -55,6 +57,7 @@ class MusicCog(commands.Cog):
             play_context = ctx
             global queue_list, vc, search_term
             search_term = ('{}'.format("+".join(args)))
+
             if not ctx.guild.voice_client:
                 try:
                     await ctx.author.voice.channel.connect()
@@ -62,15 +65,14 @@ class MusicCog(commands.Cog):
                 except:
                     await ctx.send(embed=novoice_embed)
                     return
+
             await yt_search()
+            
             if queue_list[0] == currentvidlink:
                 await play()
                 vc.play(source=audio_source)
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             else:
-                queue_embed = discord.Embed(
-                    description="**✅  Şarkı sıraya eklendi, şu an çalan şarkıyı geçmek için !skip yazın.**",
-                    color=discord.Color.red())
                 await ctx.send(embed=queue_embed)
 
             while ctx.voice_client.is_playing():
@@ -88,7 +90,6 @@ class MusicCog(commands.Cog):
 
         @bot.command()
         async def skip(ctx):
-            skip_embed = discord.Embed(description="**✅  Şarkı geçildi.**", color=discord.Color.red())
             try:
                 del queue_list[0]
             except:
