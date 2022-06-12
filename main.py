@@ -36,7 +36,7 @@ async def on_guild_join(guild):
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send("pong: version" + version)
+    await ctx.send("pong: version **" + version + "**")
 
 
 bot.run(env["BOT_TOKEN"])
