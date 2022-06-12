@@ -20,9 +20,7 @@ cantplay_embed = discord.Embed(
 samechan_embed = discord.Embed(
     description="**❌  Bu komutu kullanmak için botun olduğu ses kanalına bağlanın.**",
     color=discord.Color.red())
-dc_embed = discord.Embed(
-    description="**▶️  Ses kanalından çıkıldı.**",
-    color=discord.Color.red())
+
 
 
 class MusicCog(commands.Cog):
@@ -85,7 +83,6 @@ class MusicCog(commands.Cog):
             try:
                 queue_list.clear()
                 await ctx.voice_client.disconnect()
-                await ctx.send(embed=dc_embed)
             except:
                 return
 
@@ -104,7 +101,6 @@ class MusicCog(commands.Cog):
                 await ctx.send("**Çalınan Parça:** " + currentvidlink)
             elif len(queue_list) == 0:
                 vc.stop()
-                await ctx.send(embed=sıra_boş_embed)
                 await asyncio.sleep(30)
                 if not ctx.voice_client.is_playing():
                     await ctx.invoke(self.bot.get_command("dc"))
